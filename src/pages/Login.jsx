@@ -1,7 +1,9 @@
+import 'animate.css';
+import Swal from 'sweetalert2';
 import { object, string,ref } from 'yup';
 import { useFormik } from 'formik';
 import { useState } from "react";
-import loginBg from '../assets/images/login-bg.jpg';
+import loginBg from '../assets/images/bg-login.jpg';
 
 // define validation schema
 let userSchema = object({
@@ -27,7 +29,12 @@ const Login =()=>{
         validationSchema:userSchema,
         onSubmit:(values,action)=>{  //stores input values
          console.log(values);
-         alert("ok")
+         Swal.fire({
+                title: 'success!',
+                text: 'Congrats! form submitted successfully',
+                icon: 'success',
+                confirmButtonText: 'Cool'
+})
          action.resetForm(); //empty after submit
         }
       })
@@ -43,7 +50,8 @@ const Login =()=>{
                     display:'flex',
                     }} >
 
-            <section className="basis-3/12 h-screen  bg-gray-200 flex flex-col justify-center items-center gap-8">
+                        {/* left side for ..role select */}
+            <section className="basis-3/12 h-screen  bg-gray-200 flex flex-col justify-center items-center gap-8 animate__animated animate__slideInLeft">
                 <label className="w-48 text-center text-lg font-semibold bg-gray-300 p-4 rounded">Select Role:</label>
                 <select
                      value={role}
@@ -67,58 +75,55 @@ const Login =()=>{
                     }}
                     className='bg-blue-600 text-white px-6 py-2 rounded-lg text-white text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'
                  >
-                    Go to login
+                    {role ? (
+                              `${role.charAt(0).toUpperCase() + role.slice(1)} Login`
+                    ): "Go to Login" }
                 </button>
 
             </section>
 
 
+            {/* ---------................form container............................. */}
+            <section className=" basis-9/12 h-screen rounded-lg p-8  flex justify-center items-center animate__animated animate__zoomIn">
 
-            <section className=" basis-9/12 h-screen rounded-lg p-8  flex justify-center items-center">
-                    {/* role based login when btn is clicked  */}
-                   
-                        { 
-                            confirmedRole === "admin" ? (
-                               <form
-                               onSubmit={handleSubmit}
-                               action="#" className='min-w-[550px] bg-gray-200 py-6 flex flex-col items-center gap-4 rounded-lg '>
+                        {/* conditiona rendering :single form for all roles  */}
+
+                        {confirmedRole && (    //ensure form renders after btn clicked
+                                <form
+                                    onSubmit={handleSubmit}
+                                    action="#" className='min-w-[550px] bg-gray-200 py-6 flex flex-col items-center gap-4 rounded-lg '>
        
-                               <h1 className=' text-blue-600 w-full text-center text-xl font-bold py-2'>Admin Login </h1>
+                               <h1 className=' text-blue-600 w-full text-center text-xl font-bold py-2'>{confirmedRole.charAt(0).toUpperCase() + confirmedRole.slice(1)} Login </h1>
                                <hr className='bg-black w-full'/>
        
                                <div className='flex flex-col gap-2 w-96 '>
-                               <label htmlFor="username" className='text-lg'>Username:</label>
-                               <input
-                                   onChange={handleChange}
-                                   onBlur={handleBlur}
-                                   value={values.uname}
-                                   name='uname' 
-                                   type="username" id='username' placeholder='techsunny'
-                                   className='py-2 px-4 rounded bg-gray-300'/>
-                               <span className='text-red-500'> {touched.uname && errors.uname }</span>
+                                    <label htmlFor="username" className='text-lg'>Username:</label>
+                                    <input
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.uname}
+                                        name='uname' 
+                                        type="username" id='username' placeholder='techsunny'
+                                        className='py-2 px-4 rounded bg-gray-300'/>
+                                    <span className='text-red-500'> {touched.uname && errors.uname }</span>
                                </div>
                                
                                <div className='flex flex-col gap-2 w-96 '>
-                               <label htmlFor="password" className='text-lg'>Password:</label>
-                               <input
-                                   onChange={handleChange}
-                                   onBlur={handleBlur}
-                                   value={values.password}
-                                   name='password' 
-                                   type="password" id='password' placeholder='***' minLength={5}
-                                   className='py-2 px-4 rounded bg-gray-300'/>
-                               <span className='text-red-500'>{touched.password && errors.password} </span>
-                               </div>                                                                                                             
+                                    <label htmlFor="password" className='text-lg'>Password:</label>
+                                    <input
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.password}
+                                        name='password' 
+                                        type="password" id='password' placeholder='***' minLength={5}
+                                        className='py-2 px-4 rounded bg-gray-300'/>
+                                    <span className='text-red-500'>{touched.password && errors.password} </span>
+                               </div>
+
                                <button type="submit" className='bg-blue-600 text-white px-12 py-4 rounded-lg text-white text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'>Submit </button>
                                </form>
-       
-                           ) : confirmedRole === "teacher" ? (
-                               <div> teacher role </div>
-                           ) : confirmedRole === "student" ? (
-                               <div> student role </div>
-                           ): null
+                        )}
 
-                        }
                     
                     
                     
