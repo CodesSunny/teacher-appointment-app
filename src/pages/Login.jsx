@@ -19,6 +19,7 @@ const initialValues={
 
 const Login =()=>{
      const [role, setRole] = useState("");
+     const [confirmedRole, setConfirmedRole] = useState("");
 
       // define formik function & dstructure methods
       const {values,handleChange,handleBlur,touched,handleSubmit,errors}=useFormik({
@@ -42,7 +43,7 @@ const Login =()=>{
                     display:'flex',
                     }} >
 
-            <section className="basis-3/12 h-screen  bg-gray-200 flex flex-col justify-center  items-center gap-8">
+            <section className="basis-3/12 h-screen  bg-gray-200 flex flex-col justify-center items-center gap-8">
                 <label className="w-48 text-center text-lg font-semibold bg-gray-300 p-4 rounded">Select Role:</label>
                 <select
                      value={role}
@@ -56,11 +57,14 @@ const Login =()=>{
 
                  <button 
                     onClick={()=>{
-                        !role ? 
-                        alert("select a role") :
-                        alert(`selected role: ${role}`)
+                        if(!role ){   
+                            alert("select a role"); 
+                        }else{      //ensure role selected
+                            alert(`selected role: ${role}`);
+                            setConfirmedRole(role);   //update role on every click
+                        }
+                         
                     }}
-                    type="submit" 
                     className='bg-blue-600 text-white px-6 py-2 rounded-lg text-white text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'
                  >
                     Go to login
@@ -71,46 +75,52 @@ const Login =()=>{
 
 
             <section className=" basis-9/12 h-screen rounded-lg p-8  flex justify-center items-center">
-                    {/* admin login  */}
-                    { role === "admin" ? (
-                        <form
-                        onSubmit={handleSubmit}
-                        action="#" className='min-w-[550px] bg-gray-200 py-6 flex flex-col items-center gap-4 rounded-lg '>
+                    {/* role based login when btn is clicked  */}
+                   
+                        { 
+                            confirmedRole === "admin" ? (
+                               <form
+                               onSubmit={handleSubmit}
+                               action="#" className='min-w-[550px] bg-gray-200 py-6 flex flex-col items-center gap-4 rounded-lg '>
+       
+                               <h1 className=' text-blue-600 w-full text-center text-xl font-bold py-2'>Admin Login </h1>
+                               <hr className='bg-black w-full'/>
+       
+                               <div className='flex flex-col gap-2 w-96 '>
+                               <label htmlFor="username" className='text-lg'>Username:</label>
+                               <input
+                                   onChange={handleChange}
+                                   onBlur={handleBlur}
+                                   value={values.uname}
+                                   name='uname' 
+                                   type="username" id='username' placeholder='techsunny'
+                                   className='py-2 px-4 rounded bg-gray-300'/>
+                               <span className='text-red-500'> {touched.uname && errors.uname }</span>
+                               </div>
+                               
+                               <div className='flex flex-col gap-2 w-96 '>
+                               <label htmlFor="password" className='text-lg'>Password:</label>
+                               <input
+                                   onChange={handleChange}
+                                   onBlur={handleBlur}
+                                   value={values.password}
+                                   name='password' 
+                                   type="password" id='password' placeholder='***' minLength={5}
+                                   className='py-2 px-4 rounded bg-gray-300'/>
+                               <span className='text-red-500'>{touched.password && errors.password} </span>
+                               </div>                                                                                                             
+                               <button type="submit" className='bg-blue-600 text-white px-12 py-4 rounded-lg text-white text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'>Submit </button>
+                               </form>
+       
+                           ) : confirmedRole === "teacher" ? (
+                               <div> teacher role </div>
+                           ) : confirmedRole === "student" ? (
+                               <div> student role </div>
+                           ): null
 
-                        <h1 className=' text-blue-600 w-full text-center text-xl font-bold py-2'>Admin Login </h1>
-                        <hr className='bg-black w-full'/>
-
-                        <div className='flex flex-col gap-2 w-96 '>
-                        <label htmlFor="username" className='text-lg'>Username:</label>
-                        <input
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.uname}
-                            name='uname' 
-                            type="username" id='username' placeholder='techsunny'
-                            className='py-2 px-4 rounded bg-gray-300'/>
-                        <span className='text-red-500'> {touched.uname && errors.uname }</span>
-                        </div>
-                        
-                        <div className='flex flex-col gap-2 w-96 '>
-                        <label htmlFor="password" className='text-lg'>Password:</label>
-                        <input
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                            name='password' 
-                            type="password" id='password' placeholder='***' minLength={5}
-                            className='py-2 px-4 rounded bg-gray-300'/>
-                        <span className='text-red-500'>{touched.password && errors.password} </span>
-                        </div>                                                                                                             
-                        <button type="submit" className='bg-blue-600 text-white px-12 py-4 rounded-lg text-white text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'>Submit </button>
-                    </form>
-
-                    ) : role === "teacher" ? (
-                        <div> teacher role </div>
-                    ) : role === "teacher" ? (
-                        <div> student role </div>
-                    ): null}
+                        }
+                    
+                    
                     
 
             </section>
