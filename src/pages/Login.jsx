@@ -4,6 +4,7 @@ import { object, string,ref } from 'yup';
 import { useFormik } from 'formik';
 import { useState } from "react";
 import loginBg from '../assets/images/bg-login.jpg';
+import { Link } from 'react-router-dom';
 
 // define validation schema
 let userSchema = object({
@@ -56,12 +57,15 @@ const Login =()=>{
                 <label className="w-36 md:w-48 text-center text-md md:text-lg font-semibold bg-gray-300 p-4 rounded">Select Role:</label>
                 <select
                      value={role}
-                     onChange={(e)=> setRole(e.target.value)}
-                     className="w-36 md:w-48 text-center text-lg font-semibold bg-gray-300 p-4 rounded">
-                    <option value="">-- Select --</option>
-                    <option value="admin" >Admin</option>
-                    <option value="teacher" >Teacher</option>
-                    <option value="student" >Student</option>
+                     onChange={(e)=> {setRole(e.target.value);
+                                    setConfirmedRole("");   //reset confirmation
+                                }
+                     }
+                     className="w-36 md:w-48 text-center md:text-lg font-semibold bg-gray-300 p-4 rounded">
+                    <option  value="">-- Select --</option>
+                    <option  value="admin" >Admin</option>
+                    <option  value="teacher" >Teacher</option>
+                    <option  value="student" >Student</option>
                 </select>
 
                  <button 
@@ -125,12 +129,18 @@ const Login =()=>{
                                     <button type="submit" className='bg-blue-600 text-white px-4 md:px-12 py-2 md:py-4 rounded-lg text-white md:text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'>Submit </button>
                                </form>
 
-                                            {/* when user not registered : sign up form*/}
-                                <p className='mt-4 text-center'>Not a registered user ? <span className='text-blue-800 hover:cursor-pointer hover:font-semibold'> Signup here </span></p>
-                            </div>
-                        )}
+                                            {/* when user not registered : render sign up form  */}
+                                <p className='mt-4 text-center'>Not a registered user? 
+                                    <span className='ml-2 text-blue-800 hover:cursor-pointer hover:font-semibold' >
+                                        <Link to={`/${confirmedRole}/signup`}
 
-                          
+                                         > Signup here</Link> 
+
+                                    </span>
+                                </p>
+
+                            </div>
+                        )}                         
                     
 
             </section>
