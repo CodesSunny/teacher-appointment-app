@@ -29,15 +29,28 @@ const Login =()=>{
         initialValues:initialValues,
         validationSchema:userSchema,
         onSubmit:(values,action)=>{  //stores input values
-         console.log(values);
-         Swal.fire({
-                title: 'success!',
-                text: 'Congrats! form submitted successfully',
-                icon: 'success',
-                confirmButtonText: 'Cool'
-})
-         action.resetForm(); //empty after submit
-        }
+           const isregistered = false;
+           if(isregistered){
+               console.log(values);
+               Swal.fire({
+                      title: 'success!',
+                      text: 'Congrats! form submitted successfully',
+                      icon: 'success',
+                      confirmButtonText: 'Cool'
+                     })
+               action.resetForm(); //empty after submit
+            }else{
+                 Swal.fire({
+                    title: 'User not found!',
+                    text: 'Do you want to sign up?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Sign Up',
+                    cancelButtonText: 'No, Cancel',
+                    })
+              }
+
+           } 
       })
 
  
