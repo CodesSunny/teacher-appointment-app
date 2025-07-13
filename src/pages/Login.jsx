@@ -4,7 +4,7 @@ import { object, string,ref } from 'yup';
 import { useFormik } from 'formik';
 import { useState } from "react";
 import loginBg from '../assets/images/bg-login.jpg';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 // define validation schema
 let userSchema = object({
@@ -23,32 +23,60 @@ const initialValues={
 const Login =()=>{
      const [role, setRole] = useState("");
      const [confirmedRole, setConfirmedRole] = useState("");
+     const [remember, setRemember] = useState(false);
+
+     const navigate = useNavigate();
 
       // define formik function & dstructure methods
       const {values,handleChange,handleBlur,touched,handleSubmit,errors}=useFormik({
         initialValues:initialValues,
         validationSchema:userSchema,
-        onSubmit:(values,action)=>{  //stores input values
-           const isregistered = false;
-           if(isregistered){
-               console.log(values);
-               Swal.fire({
+        onSubmit:async (values,action)=>{  //stores input values
+        const userList = JSON.parse(localStorage.getItem("formValues")) || [];   //get data from storage or initialize empty list
+
+        // check whether userlist is an aaray
+         if (!Array.isArray(userList)) {
+                console.error("formValues in localStorage is not an array!");
+                await Swal.fire({
+                            title: 'Login Error!',
+                            text: 'Stored user data is invalid or missing. Please sign up again.',
+                            icon: 'error',
+                            confirmButtonText: 'Go to Signup'
+                        });
+                        navigate(`/${role}/signup`);
+                        return;
+             }
+
+         
+        //check whether login credentials entered present in localstorage 
+        let matchedUser = userList.some((user)=>{ return user.username === values.uname && user.password === values.password ;
+        })
+
+        if(!matchedUser){
+           await Swal.fire({
+                    title: 'invalid credentials!',
+                    text: 'Do you want to retry?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Retry',
+                    cancelButtonText: 'Cancel',
+                    })
+            return;   //exit function immediately
+        } 
+
+            await Swal.fire({
                       title: 'success!',
                       text: 'Congrats! form submitted successfully',
                       icon: 'success',
                       confirmButtonText: 'Cool'
                      })
-               action.resetForm(); //empty after submit
-            }else{
-                 Swal.fire({
-                    title: 'User not found!',
-                    text: 'Do you want to sign up?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, Sign Up',
-                    cancelButtonText: 'No, Cancel',
-                    })
-              }
+
+                     // remember login details
+         if(remember){ 
+             localStorage.setItem("loggedInUser", JSON.stringify(values.uname));  //store username of loggen in user 
+                  }
+                
+        navigate(`/${role}/dashboard`);  //go to dashboard when login successfull           
 
            } 
       })
@@ -71,7 +99,7 @@ const Login =()=>{
                 <select
                      value={role}
                      onChange={(e)=> {setRole(e.target.value);
-                                    setConfirmedRole("");   //reset confirmation
+                                    setConfirmedRole("");   //reset role on every select 
                                 }
                      }
                      className="w-36 md:w-48 text-center md:text-lg font-semibold bg-gray-300 p-4 rounded">
@@ -93,6 +121,7 @@ const Login =()=>{
                     }}
                     className='bg-blue-600 text-white px-4 md:px-6 py-2 rounded-lg text-white text-md md:text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'
                  >
+                    {/* display login btn text as per role selected or default  */}
                     {role ? (
                               `${role.charAt(0).toUpperCase() + role.slice(1)} Login`
                     ): "Go to Login" }
@@ -104,9 +133,9 @@ const Login =()=>{
             {/* ---------................form container............................. */}
             <section className=" basis-9/12 h-screen rounded-lg p-8  flex flex-col justify-center items-center animate__animated animate__zoomIn">
                     
-                        {/* conditiona rendering :single form for all roles  */}
+                        {/* conditional rendering :single form for all roles  */}
 
-                        {confirmedRole && (    //ensure form renders after btn clicked
+                        {confirmedRole && (    //ensure form renders after role selected and btn clicked  
                             <div className=' bg-gray-200 px-8 py-6 rounded-lg shadow-lg shadow-blue-400'>
                                <form
                                     onSubmit={handleSubmit}
@@ -139,10 +168,21 @@ const Login =()=>{
                                             <span className='text-red-500'>{touched.password && errors.password} </span>
                                     </div>
 
-                                    <button type="submit" className='bg-blue-600 text-white px-4 md:px-12 py-2 md:py-4 rounded-lg text-white md:text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'>Submit </button>
+                                    
+                                    <div className='flex items-center gap-2 self-start '>
+                                            <label htmlFor="remember" className='text-md md:text-lg'>Remember me:</label>
+                                            <input
+                                               onChange={()=>{setRemember(!remember)}}
+                                               type="checkbox"
+                                               id='remember'
+                                               checked={remember}
+                                               className='rounded bg-gray-300'/>
+                                    </div>
+
+                                    <button type="submit" className='bg-blue-600 text-white px-4 md:px-8 py-2 rounded-lg text-white md:text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'>Submit </button>
                                </form>
 
-                                            {/* when user not registered : render sign up form  */}
+                                {/* when user not registered : render sign up form  */}
                                 <p className='mt-4 text-center'>Not a registered user? 
                                     <span className='ml-2 text-blue-800 hover:cursor-pointer hover:font-semibold' >
                                         <Link to={`/${confirmedRole}/signup`}
