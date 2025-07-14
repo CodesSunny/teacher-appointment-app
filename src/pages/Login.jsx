@@ -32,7 +32,8 @@ const Login =()=>{
         initialValues:initialValues,
         validationSchema:userSchema,
         onSubmit:async (values,action)=>{  //stores input values
-        const userList = JSON.parse(localStorage.getItem("formValues")) || [];   //get data from storage or initialize empty list
+
+            const userList = JSON.parse(localStorage.getItem("formValues")) || [];   //get data from storage or initialize empty list
 
         // check whether userlist is an aaray
          if (!Array.isArray(userList)) {

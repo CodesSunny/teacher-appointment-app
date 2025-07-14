@@ -3,7 +3,7 @@ import schoolLogo from '../assets/images/school-logo.png';
 import { Link } from 'react-router-dom';
 
 const Navbar =()=>{
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     // store nav items in a variable
     const navItems =(
         <>    
@@ -37,7 +37,7 @@ const Navbar =()=>{
                                 
                             }
 
-                        </svg>
+                          </svg>
 
                     {show ? 
                      (
