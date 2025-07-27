@@ -56,7 +56,9 @@ const SignUp =()=>{
         username :"",
         age:"",
         password:"",
-        cpw:""
+        cpw:"",
+        role:"teacher",
+        teacherId:crypto.randomUUID()
     };  
     
     

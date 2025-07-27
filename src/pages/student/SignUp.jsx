@@ -42,9 +42,6 @@ const studentFormSchema = object({
                  });
 
 
-
-
-
                  
 const SignUp =()=>{
 
@@ -59,7 +56,9 @@ const SignUp =()=>{
         class:"",
         school:"",
         password:"",
-        cpw:""
+        cpw:"",
+        role:"student",
+        studentId:crypto.randomUUID()
     };  
 
     const userList = JSON.parse(localStorage.getItem("formValues")) || [];   //get data from storage or initialize empty array

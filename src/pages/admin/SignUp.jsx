@@ -48,7 +48,8 @@ const SignUp =()=>{
         username :"",
         age:"",
         password:"",
-        cpw:""
+        cpw:"",
+        role:"admin"
     };  
 
     const userList = JSON.parse(localStorage.getItem("formValues"))  || [];

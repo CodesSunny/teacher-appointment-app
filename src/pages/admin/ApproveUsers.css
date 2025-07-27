@@ -1,0 +1,48 @@
+table{
+    border-collapse: collapse;
+}
+th{
+    background: purple;
+}
+tr{
+    text-align: center;
+}
+
+th,td{
+    border  : 2px solid;
+    padding: 10px;
+}
+
+tbody tr:nth-child(even){
+    background: pink;
+}
+
+.btn{
+    border-radius: 10px;
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 10px;
+    color: #fff;
+}
+
+.btn:hover{
+    cursor: pointer;
+    scale: 0.9;
+    animation: enlarge 1s linear infinite;
+}
+
+
+@keyframes enlarge {
+    0% {scale: 1;}
+    25%  {scale: 1.2;}
+    50% {scale: 1;}
+    100% {scale: 0.8;}
+}
+
+.approve{
+    background: green;
+}
+
+.reject{
+    background: #a00101;
+}

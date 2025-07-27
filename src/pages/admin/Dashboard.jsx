@@ -3,6 +3,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import 'remixicon/fonts/remixicon.css'
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import ApproveUsers from '/src/pages/admin/ApproveUsers'
 
 // Import Swiper styles n modules
 import "swiper/css";
@@ -12,9 +13,10 @@ import 'swiper/css/pagination';
 
 
 const Dashboard =()=>{
-    const adminName = JSON.parse(localStorage.getItem("loggedInUser"));
+    const adminName = JSON.parse(localStorage.getItem("loggedInUser"));  //will give object stored in login page as {username: values.uname, role}
     const navigate = useNavigate();
     const [apiUserData, setApiUserData ] = useState([]);
+    const [clicked, setClicked] = useState(false);
 
     // random user api   
         const apiData =async ()=> {
@@ -43,7 +45,7 @@ const Dashboard =()=>{
             <div className="py-6 px-8 bg-black flex justify-between text-white ">
                 
                 <div className="flex items-center gap-2">
-                    <h2 className='text-lg'>Hi! <span className='text-blue-800 font-semibold text-xl italic'>{adminName}</span></h2>
+                    <h2 className='text-lg'>Hi! <span className='text-blue-800 font-semibold text-xl italic'>{adminName.username}</span></h2>
                     <i className="ri-user-line text-2xl"></i>
                 </div>
 
@@ -57,30 +59,30 @@ const Dashboard =()=>{
 
             <main className='w-full flex h-[100%]'>
                 {/* sidebar */}
-                <section className='basis-2/12 bg-black text-white py-8 px-4 flex flex-col justify-around '>
+                <section className='basis-2/12 bg-black text-white px-4 flex flex-col pt-8 gap-12 min-h-[100vh]'>
                     <button
-                        className='bg-blue-800 py-4 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
-                        onClick={()=>{navigate('/login')}}
+                        className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
+                        onClick={()=>setClicked(true)}
                         >
                         Add Teacher
                     </button>
 
                     <button
-                        className='bg-blue-800 py-4 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
+                        className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
                         onClick={()=>{navigate('/login')}}
                         >
                         Update/Delete Teacher
                     </button>
 
                     <button
-                        className='bg-blue-800 py-4 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
+                        className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
                         onClick={()=>{navigate('/login')}}
                         >
                        All Slots
                     </button>
 
                     <button
-                        className='bg-blue-800 py-4 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
+                        className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
                         onClick={()=>{navigate('/login')}}
                         >
                         All Mesaages
@@ -88,60 +90,51 @@ const Dashboard =()=>{
 
                 </section>
 
-                {/* main display */}
-                <section className=' basis-10/12 grow p-8 bg-gray-100 flex overflow-hidden '>
-
-                    {/* {
-                        apiUserData.map((user,i)=>(
-
-                         
-                                    <div key={i}  className='w-60  bg-white border rounded h-88'>
-                                        <img className='w-full ' src="../../src/assets/images/bg-login.jpg" alt="photo" />
-                                        <div className='p-2 w-full'>
-                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> Name:</span> <span className='text-blue-800 font-bold '>Sunny</span></p>
-                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> Age:</span> <span className='text-blue-800 font-bold '>38</span></p>
-                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> City:</span> <span className='text-blue-800 font-bold '>Lucknow</span></p>
-                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> Country:</span> <span className='text-blue-800 font-bold '>India</span></p>
-                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '>Department: </span> <span className='text-blue-800 font-bold '>commerce</span></p>
-                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> Subject:</span> <span className='text-blue-800 font-bold '>Statistics </span></p>
-                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '>Contact: </span> <span className='text-blue-800 font-bold '> 9198121212 </span></p>
-                                        </div>
-                                    </div>
-                           
-                            
-                            )
-                        )
-                    } */}
-                    
-                                   
-                    <Swiper  navigation={true } pagination={true} modules ={[Navigation,Pagination]} spaceBetween={10} slidesPerView={3} >
-                        {
-                            apiUserData.map((user,i)=>(
-                                        <SwiperSlide key={i }  >   
-                                            
-                                                <div  className='w-96 bg-white border rounded'>
-                                                    <img src={user.picture.large} alt="image" className="w-full " />
-                                                    <div className='p-2 w-full'>
-                                                        <h1 className="text-lg font-semibold text-center text-purple-800 bg-gray-100 w-full"> <span className="mr-[5px]">{user.name.title }</span > <span className="mr-[3px]">{user.name.first}</span> <span >{user.name.last}</span> </h1>
-                                                        <p className='flex gap-2'> <span className='block w-24 font-semibold '> Age:</span> <span className='text-blue-800 font-bold '>{user.dob.age }</span></p>
-                                                        <p className='flex gap-2'> <span className='block w-24 font-semibold '> City:</span> <span className='text-blue-800 font-bold '>{user.location.city.split(" ")[0]}</span></p>
-                                                        <p className='flex gap-2'> <span className='block w-24 font-semibold '> Country:</span> <span className='text-blue-800 font-bold '>{user.location.country}</span></p>
-                                                        <p className='flex gap-2'> <span className='block w-24 font-semibold '>Department: </span> <span className='text-blue-800 font-bold '>commerce</span></p>
-                                                        <p className='flex gap-2'> <span className='block w-24 font-semibold '> Subject:</span> <span className='text-blue-800 font-bold '>Statistics </span></p>
-                                                        <p className='flex gap-2'> <span className='block w-24 font-semibold '>Contact: </span> <span className='text-blue-800 font-bold '> {user.cell}  </span></p>
-                                                        <p className='flex gap-2'> <span className='block w-24 font-semibold '>Email: </span> <span className='text-blue-800 text-md '> {user.email}  </span></p>
+              {
+                clicked ? 
+                (
+                 <section className=' basis-10/12 grow p-8 bg-gray-100 flex justify-center overflow-hidden'>
+                    <ApproveUsers/>
+                 </section>
+                )
+                 : 
+                 (
+                    <section className=' basis-10/12 grow p-8 bg-gray-100 flex overflow-hidden '>
+                               {/* show slides */}
+                        <Swiper  navigation={true } pagination={true} modules ={[Navigation,Pagination]} spaceBetween={10} slidesPerView={3} >
+                            {
+                                apiUserData.map((user,i)=>(
+                                            <SwiperSlide key={i }  >   
+                                                
+                                                    <div  className='w-96 bg-white rounded-lg overflow-hidden shadow-lg shadow-pink-400'>
+                                                        <img src={user.picture.large} alt="image" className="w-full " />
+                                                        <div className='p-2 w-full'>
+                                                            <h1 className="text-lg font-semibold text-center text-purple-800 bg-gray-100 w-full"> <span className="mr-[5px]">{user.name.title }</span > <span className="mr-[3px]">{user.name.first}</span> <span >{user.name.last}</span> </h1>
+                                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> Age:</span> <span className='text-blue-800 font-bold '>{user.dob.age }</span></p>
+                                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> City:</span> <span className='text-blue-800 font-bold '>{user.location.city.split(" ")[0]}</span></p>
+                                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> Country:</span> <span className='text-blue-800 font-bold '>{user.location.country}</span></p>
+                                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '>Department: </span> <span className='text-blue-800 font-bold '>commerce</span></p>
+                                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '> Subject:</span> <span className='text-blue-800 font-bold '>Statistics </span></p>
+                                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '>Contact: </span> <span className='text-blue-800 font-bold '> {user.cell}  </span></p>
+                                                            <p className='flex gap-2'> <span className='block w-24 font-semibold '>Email: </span> <span className='text-blue-800 text-md '> {user.email}  </span></p>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                        </SwiperSlide>
-                                           ))
+                                            </SwiperSlide>
+                                            ))
 
-                                               
-                        }
-                    </Swiper>
-     
-                  
-                </section>
+                                                
+                            }
+                        </Swiper>
+        
+                    
+                    </section>
+                 )
+              }
+                
+                
+
+                
             </main>
 
        </div>

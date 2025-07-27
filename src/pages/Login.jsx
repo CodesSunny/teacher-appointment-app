@@ -50,7 +50,7 @@ const Login =()=>{
 
          
         //check whether login credentials entered present in localstorage 
-        let matchedUser = userList.some((user)=>{ return user.username === values.uname && user.password === values.password ;
+        let matchedUser = userList.some((user)=>{ return user.username === values.uname && user.password === values.password  && user.role === role;
         })
 
         if(!matchedUser){
@@ -74,7 +74,7 @@ const Login =()=>{
 
                      // remember login details
          if(remember){ 
-             localStorage.setItem("loggedInUser", JSON.stringify(values.uname));  //store username of loggen in user 
+             localStorage.setItem("loggedInUser", JSON.stringify({username: values.uname, role}));  //store username of loggen in user 
                   }
                 
         navigate(`/${role}/dashboard`);  //go to dashboard when login successfull           
