@@ -18,7 +18,7 @@ const Dashboard =()=>{
     const adminName = JSON.parse(localStorage.getItem("loggedInUser"));  //will give object stored in login page as {username: values.uname, role}
     const navigate = useNavigate();
     const [apiUserData, setApiUserData ] = useState([]);
-    const [slideShow, setSlideShow] = useState(false);
+    const [slideShow, setSlideShow] = useState(true);
     const [activePage, setActivePage] = useState(null);
   
 
@@ -37,6 +37,20 @@ const Dashboard =()=>{
     useEffect(()=>{
         apiData();
     }, [])
+
+
+    const componentMap = {
+          "addTeacher" :    <ApproveUsers/> ,
+          "deleteTeacher" :  <ManageTeachers/> ,
+          "allSlots" :       <ManageTeachers/> ,
+          "allMessages" :    <AllMessages/>  ,
+    }
+
+
+    const renderComponent=(btnName)=>{
+        setSlideShow(false);
+        setActivePage(btnName);
+    }
 
 
     console.log(apiUserData);
@@ -66,28 +80,32 @@ const Dashboard =()=>{
                 <section className='basis-2/12 bg-black text-white px-4 flex flex-col pt-8 gap-12 min-h-[100vh]'>
                     <button
                         className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
-                        onClick={()=> {setActivePage("addTeacher") ; setSlideShow(true)}}
+                        name="addTeacher"
+                        onClick={(e)=> renderComponent(e.target.name)}
                         >
                         Add Teacher
                     </button>
 
                     <button
                         className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
-                        onClick={()=> {setActivePage("deleteTeacher"); setSlideShow(true)}}
+                        name="deleteTeacher"
+                        onClick={(e)=> renderComponent(e.target.name)}
                         >
                         Update/Delete Teacher
                     </button>
 
                     <button
                         className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
-                        onClick={()=> {setActivePage("addSlots"); setSlideShow(true)}}
+                        name="allSlots"
+                        onClick={(e)=> renderComponent(e.target.name)}
                         >
                        All Slots
                     </button>
 
                     <button
                         className='bg-blue-800 py-8 rounded text-lg font-semibold hover:text-blue-900 hover:bg-white hover:cursor-pointer'
-                       onClick={()=> {setActivePage("allMessages"); setSlideShow(true)}}
+                        name="allMessages"
+                        onClick={(e)=> renderComponent(e.target.name)}
                         >
                         All Mesaages
                     </button>
@@ -98,15 +116,6 @@ const Dashboard =()=>{
                     {/*------------------ page content---------------------------------------- */}
                     {
                         slideShow ? (
-                           //{/* render pages dynimacally on btn clicks */}
-                        <section className=' basis-10/12 grow p-8 bg-gray-100 flex justify-center overflow-hidden'>
-                        {  activePage === "addTeacher" &&     <ApproveUsers/>    }
-                        {  activePage === "deleteTeacher" &&  <ManageTeachers/>    }
-                        {  activePage === "addSlots" &&       <ManageTeachers/>   }
-                        {  activePage === "allMessages" &&    <AllMessages/>    }
-                        </section> 
-
-                        ) : (
                         //{/* //show slides default without click */}
                         <section className=' basis-10/12 grow p-8 bg-gray-100 flex overflow-hidden '>
                                 {/* show slides */}
@@ -137,7 +146,15 @@ const Dashboard =()=>{
                             </Swiper>   
                         
                         </section>
-                        )
+
+                        ) : (
+                           //{/* render pages dynimacally on btn clicks */}
+                        <section className=' basis-10/12 grow p-8 bg-gray-100 flex justify-center overflow-hidden'>
+                            {/*use object[key] to access object values with keys dynamically   */}
+                             { componentMap[activePage]   } 
+                        </section> 
+
+                        ) 
 
                     }
 
