@@ -48,6 +48,11 @@ const teacherFormSchema = object({
 const SignUp =()=>{
 
     const navigate = useNavigate();
+    const date = new Date().toDateString().slice(4).split(" ").join("");
+    const randomNums =Math.floor(Math.random() * 900) + 100;
+    const myid = "Teacher"+ randomNums+ date ;
+    console.log(myid);  //Teacher659Aug022025
+    
     
     const initialValues = {
         fullname: "", 
@@ -58,7 +63,8 @@ const SignUp =()=>{
         password:"",
         cpw:"",
         role:"teacher",
-        teacherId:crypto.randomUUID()
+        teacherId: "Teacher"+ randomNums+ date
+        // teacherId:crypto.randomUUID()
     };  
     
     

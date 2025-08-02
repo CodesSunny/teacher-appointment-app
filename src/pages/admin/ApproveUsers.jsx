@@ -36,14 +36,18 @@ const ApproveUsers =()=>{
         
     } 
 
-    const handleMsg=(e,userId)=>{
+    const handleMsg=(e,userId, name)=>{
         const message = e.target.value.trim();
+        const date = new Date();
         if(!message) return;
+        console.log("id: ", userId, "name: " ,name , "date: ", date );
         
         // write msg 
          set(ref(db, 'users/' + userId),{
            msg : message,
-           id: userId
+           id: userId,
+           name:name,
+           date: date.toLocaleString(), 
          })
          
          Swal.fire({
@@ -104,7 +108,7 @@ const ApproveUsers =()=>{
                                     </td>
                                     <td >
                                         <textarea
-                                            onBlur={(e)=>handleMsg( e,item.teacherId)}
+                                            onBlur={(e)=>handleMsg( e,item.teacherId, item.fullname)}
                                             name="Message" id="Message" placeholder='..write msg'/>
                                     </td>
                                 </tr>
@@ -157,7 +161,7 @@ const ApproveUsers =()=>{
                                     </td>
                                     <td >
                                         <textarea 
-                                             onBlur={(e)=>handleMsg( e,item.studentId)}
+                                             onBlur={(e)=>handleMsg( e,item.studentId, item.fullname)}
                                             name="Message" id="Message" placeholder='..write msg'/>
                                     </td>
                                 </tr>
