@@ -2,9 +2,9 @@ import 'animate.css';
 import Swal from 'sweetalert2';
 import { object, string,ref } from 'yup';
 import { useFormik } from 'formik';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import loginBg from '../assets/images/bg-login.jpg';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link,useNavigate,useLocation } from 'react-router-dom';
 
 // define validation schema
 let userSchema = object({
@@ -26,6 +26,15 @@ const Login =()=>{
      const [remember, setRemember] = useState(false);
 
      const navigate = useNavigate();
+     const {state} = useLocation();   //role
+
+     useEffect(()=>{
+        if(!state){    //role nill
+            return;
+        }
+        setRole(state.role)
+        setConfirmedRole(state.role )
+     },[])
 
       // define formik function & dstructure methods
       const {values,handleChange,handleBlur,touched,handleSubmit,errors}=useFormik({
@@ -94,7 +103,9 @@ const Login =()=>{
                     overflow:'hidden'
                     }} >
 
-                        {/* left side for ..role select */}
+{
+    !confirmedRole && (
+                        ///* left side for ..role select */
             <section className="basis-3/12 h-screen  bg-gray-200 flex flex-col justify-center items-center gap-8 animate__animated animate__slideInLeft">
                 <label className="w-36 md:w-48 text-center text-md md:text-lg font-semibold bg-gray-300 p-4 rounded">Select Role:</label>
                 <select
@@ -129,6 +140,9 @@ const Login =()=>{
                 </button>
 
             </section>
+
+    )
+}
 
 
             {/* ---------................form container............................. */}

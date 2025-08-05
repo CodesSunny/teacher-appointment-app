@@ -1,3 +1,4 @@
+import MyContext from "./Context";
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Login from './pages/Login';
 import AdminDashboard from './pages/admin/Dashboard';
@@ -12,34 +13,51 @@ import Blog from './pages/navLinks/Blog';
 import Contact from './pages/navLinks/Contact';
 import AboutUs from './pages/navLinks/AboutUs';
 import NotFound from './pages/NotFound';
-import { useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 
 
 function App() {
 
+  
+const {loggedUser,setLoggedUser}= useContext(MyContext);
+console.log(loggedUser);
+
+
+   useEffect(()=>{
+      const loggedUserInStorage = JSON.parse(localStorage.getItem("loggedInUser"));
+      setLoggedUser(loggedUserInStorage)
+    
+   },[])
+
+
+
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/signup" element={<AdminSignUp />} />
-        <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
-        <Route path="/teacher/signup" element={<TeacherSignUp />} />
-        <Route path="/student/dashboard" element={<StudentDashboard />} />
-        <Route path="/student/signup" element={<StudentSignUp />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="*" element={<NotFound />} />
 
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin/dashboard" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute> } />
+          <Route path="/admin/signup" element={<AdminSignUp />} />
+          <Route path="/teacher/dashboard" element={<ProtectedRoute role="teacher"><TeacherDashboard /></ProtectedRoute> } />
+          <Route path="/teacher/signup" element={<TeacherSignUp />} />
+          <Route path="/student/dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
+          <Route path="/student/signup" element={<StudentSignUp />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="*" element={<NotFound />} />
+
+        </Routes>
+      </BrowserRouter>
+
   )
 }
 
