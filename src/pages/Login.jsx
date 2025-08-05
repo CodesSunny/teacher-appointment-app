@@ -44,7 +44,7 @@ const Login =()=>{
                             icon: 'error',
                             confirmButtonText: 'Go to Signup'
                         });
-                        navigate(`/${role}/signup`);
+                navigate(`/${role}/signup`);
                         return;
              }
 
@@ -72,7 +72,7 @@ const Login =()=>{
                       confirmButtonText: 'Cool'
                      })
 
-                     // remember login details
+            // remember login details
          if(remember){ 
              localStorage.setItem("loggedInUser", JSON.stringify({username: values.uname, role}));  //store username of loggen in user 
                   }

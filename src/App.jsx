@@ -12,6 +12,7 @@ import Blog from './pages/navLinks/Blog';
 import Contact from './pages/navLinks/Contact';
 import AboutUs from './pages/navLinks/AboutUs';
 import NotFound from './pages/NotFound';
+import { useEffect } from "react";
 
 
 
