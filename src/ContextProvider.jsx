@@ -4,8 +4,7 @@ import MyContext from "./Context";
 
 const ContextProvider =({children })=>{
 
-
-const [loggedUser,setLoggedUser] = useState(null);
+    const [loggedUser,setLoggedUser] = useState(null);
 
     return(
         <MyContext.Provider value={{loggedUser,setLoggedUser}}>

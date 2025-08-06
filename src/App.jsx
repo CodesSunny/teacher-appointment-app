@@ -13,24 +13,20 @@ import Blog from './pages/navLinks/Blog';
 import Contact from './pages/navLinks/Contact';
 import AboutUs from './pages/navLinks/AboutUs';
 import NotFound from './pages/NotFound';
-import { useState,useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
 
-
 function App() {
-
   
 const {loggedUser,setLoggedUser}= useContext(MyContext);
-console.log(loggedUser);
-
 
    useEffect(()=>{
       const loggedUserInStorage = JSON.parse(localStorage.getItem("loggedInUser"));
-      setLoggedUser(loggedUserInStorage)
-    
+      if(loggedUserInStorage){
+        setLoggedUser(loggedUserInStorage);
+      }
    },[])
 
 

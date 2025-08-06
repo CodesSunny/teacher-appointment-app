@@ -41,7 +41,6 @@ const Login =()=>{
         initialValues:initialValues,
         validationSchema:userSchema,
         onSubmit:async (values,action)=>{  //stores input values
-
             const userList = JSON.parse(localStorage.getItem("formValues")) || [];   //get data from storage or initialize empty list
 
         // check whether userlist is an aaray
@@ -83,7 +82,7 @@ const Login =()=>{
 
             // remember login details
          if(remember){ 
-             localStorage.setItem("loggedInUser", JSON.stringify({username: values.uname, role}));  //store username of loggen in user 
+             localStorage.setItem("loggedInUser", JSON.stringify({username: values.uname, role}));  //store username of logged in user 
                   }
                 
         navigate(`/${role}/dashboard`);  //go to dashboard when login successfull           
@@ -100,49 +99,50 @@ const Login =()=>{
                     height: '100vh',
                     width: '100vw',
                     display:'flex',
+                    justifyContent:'center',
                     overflow:'hidden'
                     }} >
 
-{
-    !confirmedRole && (
-                        ///* left side for ..role select */
-            <section className="basis-3/12 h-screen  bg-gray-200 flex flex-col justify-center items-center gap-8 animate__animated animate__slideInLeft">
-                <label className="w-36 md:w-48 text-center text-md md:text-lg font-semibold bg-gray-300 p-4 rounded">Select Role:</label>
-                <select
-                     value={role}
-                     onChange={(e)=> {setRole(e.target.value);
-                                    setConfirmedRole("");   //reset role on every select 
+            {
+                !confirmedRole && (
+                                    ///* left side for ..role select */
+                        <section className="basis-3/12 h-screen  bg-gray-200 flex flex-col justify-center items-center gap-8 animate__animated animate__slideInLeft">
+                            <label className="w-36 md:w-48 text-center text-md md:text-lg font-semibold bg-gray-300 p-4 rounded">Select Role:</label>
+                            <select
+                                value={role}
+                                onChange={(e)=> {setRole(e.target.value);
+                                                setConfirmedRole("");   //reset role on every select 
+                                            }
                                 }
-                     }
-                     className="w-36 md:w-48 text-center md:text-lg font-semibold bg-gray-300 p-4 rounded">
-                    <option  value="">-- Select --</option>
-                    <option  value="admin" >Admin</option>
-                    <option  value="teacher" >Teacher</option>
-                    <option  value="student" >Student</option>
-                </select>
+                                className="w-36 md:w-48 text-center md:text-lg font-semibold bg-gray-300 p-4 rounded">
+                                <option  value="">-- Select --</option>
+                                <option  value="admin" >Admin</option>
+                                <option  value="teacher" >Teacher</option>
+                                <option  value="student" >Student</option>
+                            </select>
 
-                 <button 
-                    onClick={()=>{
-                        if(!role ){   
-                            alert("select a role"); 
-                        }else{      //ensure role selected
-                            alert(`selected role: ${role}`);
-                            setConfirmedRole(role);   //update role on every click
-                        }
-                         
-                    }}
-                    className='bg-blue-600 text-white px-4 md:px-6 py-2 rounded-lg text-white text-md md:text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'
-                 >
-                    {/* display login btn text as per role selected or default  */}
-                    {role ? (
-                              `${role.charAt(0).toUpperCase() + role.slice(1)} Login`
-                    ): "Go to Login" }
-                </button>
+                            <button 
+                                onClick={()=>{
+                                    if(!role ){   
+                                        alert("select a role"); 
+                                    }else{      //ensure role selected
+                                        alert(`selected role: ${role}`);
+                                        setConfirmedRole(role);   //update role on every click
+                                    }
+                                    
+                                }}
+                                className='bg-blue-600 text-white px-4 md:px-6 py-2 rounded-lg text-white text-md md:text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'
+                            >
+                                {/* display login btn text as per role selected or default  */}
+                                {role ? (
+                                        `${role.charAt(0).toUpperCase() + role.slice(1)} Login`
+                                ): "Go to Login" }
+                            </button>
 
-            </section>
+                        </section>
 
-    )
-}
+                )
+            }
 
 
             {/* ---------................form container............................. */}
