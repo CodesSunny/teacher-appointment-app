@@ -128,7 +128,7 @@ const SignUp =()=>{
 
                     <h1 className='w-full py-2 font-bold text-blue-800 text-3xl text-center border-b-3 mb-4 '> Student Registration Page </h1>
                     
-                    <div className='flex flex-col md:flex-row gap-2 self-stretch md:items-center px-2 py-2  rounded-md'>
+                    <div className='flex flex-col md:flex-row gap-2 self-stretch md:items-center px-2 md:py-2  rounded-md'>
                         <label htmlFor="fullname" className='text-xl '>Fullname:</label>
                         <input
                             onChange={handleChange}
@@ -141,7 +141,7 @@ const SignUp =()=>{
                     </div>
 
                     <div className='flex flex-col md:flex-row gap-2'>
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="email" className='text-lg '>E-mail:</label>
                             <input
                                 onChange={handleChange}
@@ -152,7 +152,7 @@ const SignUp =()=>{
                             <span className='text-red-500'> {touched.email && errors.email } </span>
                         </div>
 
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="mobile" className='text-lg '>Mobile No:</label>
                             <input
                                 onChange={handleChange}
@@ -165,7 +165,7 @@ const SignUp =()=>{
                     </div>
 
                     <div className='flex flex-col md:flex-row gap-2'>
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="username" className='text-lg '>Username:</label>
                             <input
                                 onChange={handleChange}
@@ -177,7 +177,7 @@ const SignUp =()=>{
                             <span className='text-red-500'>{touched.username && errors.username} </span>
                         </div>
 
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="age" className='text-lg '>Age:</label>
                             <input
                                 onChange={handleChange}
@@ -192,7 +192,7 @@ const SignUp =()=>{
                     </div>
 
                     <div className='flex flex-col md:flex-row gap-2'>
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="class" className='text-lg '>Class:</label>
                             <select 
                                 onChange={handleChange}
@@ -219,7 +219,7 @@ const SignUp =()=>{
                             <span className='text-red-500'>{touched.class && errors.class} </span>
                         </div>
 
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="school" className='text-lg '>School/College:</label>
                             <input
                                 onChange={handleChange}
@@ -234,7 +234,7 @@ const SignUp =()=>{
                     </div>
 
                     <div className='flex flex-col md:flex-row gap-2'>
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="password" className='text-lg '>Password:</label>
                             <input
                                 onChange={handleChange}
@@ -245,7 +245,7 @@ const SignUp =()=>{
                             <span className='text-red-500'> {touched.password && errors.password} </span>
                         </div>
 
-                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 py-2  rounded-md'>
+                        <div className='flex flex-col gap-1 w-screen md:w-96 px-4 md:py-2  rounded-md'>
                             <label htmlFor="cpw" className='text-lg '>Confirm Password:</label>
                             <input
                                 onChange={handleChange}
