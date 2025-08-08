@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import {useFormik } from 'formik';
 import { object, string,ref, number } from 'yup';
 import { useNavigate } from 'react-router-dom';
+import  loginBg from '../../assets/images/bg-login.jpg'
 
 // define validation/error msg 
 const adminFormSchema = object({
@@ -86,105 +87,118 @@ const SignUp =()=>{
 
 
     return (
-        <div className=' bg-[#456882] h-screen py-6 flex justify-center items-center'>
+        <div
+         style={{ 
+                            backgroundImage: `URL(${loginBg})`,
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            height: '100vh',
+                            width: '100vw',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            overflow:'hidden'
+                            }} >
             
-            
-            <form
-                onSubmit={handleSubmit}
-                action="#" className='bg-[#1B3C53] px-8 py-4 flex flex-col items-center gap-6 rounded-lg shadow-lg shadow-red-900 animate__animated animate__backInLeft'>
+            <div className=' bg-gray-200 px-8 py-6 rounded-lg shadow-lg shadow-blue-400 animate__animated animate__backInLeft'>
+                <form
+                    onSubmit={handleSubmit}
+                    action="#" 
+                    className='flex flex-col items-center gap-2'>
 
-                <h1 className='w-full py-2 font-bold text-blue-800 text-3xl text-center border-b-3 mb-4 '> Admin Registration Page </h1>
-                
-                <div className='flex gap-2 self-stretch items-center px-2 py-2 shadow-lg shadow-blue-900 rounded-md'>
-                    <label htmlFor="fullname" className='text-xl text-blue-800 font-semibold'>Fullname:</label>
-                    <input
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.fullname}
-                        name='fullname'
-                        type="text" id='fullname' placeholder='enter full name here' className='grow py-2 px-4 bg-[#3E5879] text-white rounded'
-                    />    
-                    <span className='text-red-500'>{touched.fullname && errors.fullname} </span>
-                </div>
-
-                <div className='flex gap-2'>
-                    <div className='flex flex-col gap-1 w-96 px-4 py-2 shadow-lg shadow-blue-900 rounded-md'>
-                        <label htmlFor="email" className='text-lg text-blue-800 font-semibold'>E-mail:</label>
+                    <h1 className='text-blue-600 w-full text-center text-xl font-bold py-2'> Admin Registration Page </h1>
+                    <hr className='bg-black w-full h-[2px]'/>
+                    
+                    <div className=' flex flex-col md:flex-row gap-2  self-stretch px-2 py-2 rounded-md'>
+                        <label htmlFor="fullname" className='text-lg'>Fullname:</label>
                         <input
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.email}
-                            name='email' 
-                            type="email" id='email' placeholder='abc@mail.com' className='py-2 px-4 bg-[#3E5879] text-white rounded'/>
-                        <span className='text-red-500'> {touched.email && errors.email } </span>
-                    </div>
-
-                    <div className='flex flex-col gap-1 w-96 px-4 py-2 shadow-lg shadow-blue-900 rounded-md'>
-                        <label htmlFor="mobile" className='text-lg text-blue-800 font-semibold'>Mobile No:</label>
-                        <input
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.mobile}
-                            name='mobile' 
-                            type="tel" id='mobile' placeholder='enter ur mobile no here' maxLength="10" className='py-2 px-4 bg-[#3E5879] text-white rounded'/>
-                        <span className='text-red-500'>{touched.mobile && errors.mobile } </span>
-                    </div>
-                </div>
-
-                <div className='flex gap-2'>
-                    <div className='flex flex-col gap-1 w-96 px-4 py-2 shadow-lg shadow-blue-900 rounded-md'>
-                        <label htmlFor="username" className='text-lg text-blue-800 font-semibold'>Username:</label>
-                        <input
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.username}
-                            name='username'
-                            type="text" id='username'placeholder='techsunny' className='py-2 px-4 bg-[#3E5879] text-white rounded'
+                            value={values.fullname}
+                            name='fullname'
+                            type="text" id='fullname' placeholder='enter full name here' className='grow py-2 px-4 bg-gray-100 rounded'
                         />    
-                        <span className='text-red-500'>{touched.username && errors.username} </span>
+                        <span className='text-red-500'>{touched.fullname && errors.fullname} </span>
                     </div>
 
-                    <div className='flex flex-col gap-1 w-96 px-4 py-2 shadow-lg shadow-blue-900 rounded-md'>
-                        <label htmlFor="age" className='text-lg text-blue-800 font-semibold'>Age:</label>
-                        <input
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.age}
-                            name='age'
-                            type="number" id='age'placeholder='25' className='py-2 px-4 bg-[#3E5879] text-white rounded'
-                        />    
-                        <span className='text-red-500'>{touched.age && errors.age} </span>
+                    <div className='flex flex-col md:flex-row gap-2'>
+                        <div className='flex flex-col gap-1 md:w-96 w-screen px-4 py-2  rounded-md'>
+                            <label htmlFor="email" className='text-lg'>E-mail:</label>
+                            <input
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.email}
+                                name='email' 
+                                type="email" id='email' placeholder='abc@mail.com' className='py-2 px-4 bg-gray-100 rounded'/>
+                            <span className='text-red-500'> {touched.email && errors.email } </span>
+                        </div>
+
+                        <div className='flex flex-col gap-1 md:w-96 w-screen px-4 py-2 rounded-md'>
+                            <label htmlFor="mobile" className='text-lg'>Mobile No:</label>
+                            <input
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.mobile}
+                                name='mobile' 
+                                type="tel" id='mobile' placeholder='enter ur mobile no here' maxLength="10" className='py-2 px-4 bg-gray-100 rounded'/>
+                            <span className='text-red-500'>{touched.mobile && errors.mobile } </span>
+                        </div>
                     </div>
 
-                </div>
+                    <div className='flex flex-col md:flex-row gap-2'>
+                        <div className='flex flex-col gap-1 md:w-96 w-screen px-4 py-2 rounded-md'>
+                            <label htmlFor="username" className='text-lg'>Username:</label>
+                            <input
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.username}
+                                name='username'
+                                type="text" id='username'placeholder='techsunny' className='py-2 px-4 bg-gray-100 rounded'
+                            />    
+                            <span className='text-red-500'>{touched.username && errors.username} </span>
+                        </div>
 
-                <div className='flex gap-2'>
-                    <div className='flex flex-col gap-1 w-96 px-4 py-2 shadow-lg shadow-blue-900 rounded-md'>
-                        <label htmlFor="password" className='text-lg text-blue-800 font-semibold'>Password:</label>
-                        <input
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password}
-                            name='password' 
-                            type="password" id='password' placeholder='******' minLength={6} className='py-2 px-4 bg-[#3E5879] text-white rounded'/>
-                        <span className='text-red-500'> {touched.password && errors.password} </span>
+                        <div className='flex flex-col gap-1 md:w-96 w-screen px-4 py-2 rounded-md'>
+                            <label htmlFor="age" className='text-lg'>Age:</label>
+                            <input
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.age}
+                                name='age'
+                                type="number" id='age'placeholder='25' className='py-2 px-4 bg-gray-100 text-white rounded'
+                            />    
+                            <span className='text-red-500'>{touched.age && errors.age} </span>
+                        </div>
+
                     </div>
 
-                    <div className='flex flex-col gap-1 w-96 px-4 py-2 shadow-lg shadow-blue-900 rounded-md'>
-                        <label htmlFor="cpw" className='text-lg text-blue-800 font-semibold'>Confirm Password:</label>
-                        <input
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.cpw}
-                            name='cpw' 
-                            type="text" id='cpw' placeholder='enter same password' className='py-2 px-4 bg-[#3E5879] text-white rounded'/>
-                        <span className='text-red-500'> {touched.cpw && errors.cpw} </span>
-                    </div>
-                </div>                                                                                                                                
-                <button type="submit" className='bg-blue-800 px-8 py-2 rounded-lg text-white text-xl font-semibold shadow-md shadow-red-500 hover:cursor-pointer hover:scale-95'> Register </button>
-            </form>
+                    <div className='flex flex-col md:flex-row gap-2'>
+                        <div className='flex flex-col gap-1 md:w-96 w-screen px-4 py-2 rounded-md'>
+                            <label htmlFor="password" className='text-lg'>Password:</label>
+                            <input
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.password}
+                                name='password' 
+                                type="password" id='password' placeholder='******' minLength={6} className='py-2 px-4 bg-gray-100 rounded'/>
+                            <span className='text-red-500'> {touched.password && errors.password} </span>
+                        </div>
 
-
+                        <div className='flex flex-col gap-1 md:w-96 w-screen px-4 py-2 rounded-md'>
+                            <label htmlFor="cpw" className='text-lg'>Confirm Password:</label>
+                            <input
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.cpw}
+                                name='cpw' 
+                                type="text" id='cpw' placeholder='enter same password' className='py-2 px-4 bg-gray-100 rounded'/>
+                            <span className='text-red-500'> {touched.cpw && errors.cpw} </span>
+                        </div>
+                    </div>                                                                                                                                
+                    <button type="submit" className='bg-blue-600 text-white px-4 md:px-8 py-2 rounded-lg text-white md:text-xl font-semibold shadow-lg hover:cursor-pointer hover:scale-95'> Register </button>
+                </form>
+            </div>
         </div>
     )
 }

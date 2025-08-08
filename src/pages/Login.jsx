@@ -2,7 +2,8 @@ import 'animate.css';
 import Swal from 'sweetalert2';
 import { object, string,ref } from 'yup';
 import { useFormik } from 'formik';
-import { useEffect, useState } from "react";
+import MyContext from '../Context';
+import { useEffect, useState,useContext } from "react";
 import loginBg from '../assets/images/bg-login.jpg';
 import { Link,useNavigate,useLocation } from 'react-router-dom';
 
@@ -24,6 +25,7 @@ const Login =()=>{
      const [role, setRole] = useState("");
      const [confirmedRole, setConfirmedRole] = useState("");
      const [remember, setRemember] = useState(false);
+     const {loggedUser,setLoggedUser}= useContext(MyContext)
 
      const navigate = useNavigate();
      const {state} = useLocation();   //role
@@ -83,6 +85,9 @@ const Login =()=>{
             // remember login details
          if(remember){ 
              localStorage.setItem("loggedInUser", JSON.stringify({username: values.uname, role}));  //store username of logged in user 
+             setLoggedUser({username: values.uname, role});
+             console.log(loggedUser);
+             
                   }
                 
         navigate(`/${role}/dashboard`);  //go to dashboard when login successfull           

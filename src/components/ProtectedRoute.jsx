@@ -5,12 +5,11 @@ import { useNavigate,useLocation } from 'react-router-dom';
 
 
 const ProtectedRoute = ({children, role }) => {
-
     const {loggedUser}= useContext(MyContext);
     const navigate = useNavigate();
     const [isChildren, setIsChildren ] = useState(false);
     const {pathname} = useLocation();   //useLocation stores current route path 
-
+    
     useEffect(()=>{
         if(loggedUser?.username && loggedUser?.role == role.trim() ){
             setIsChildren(true );

@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import {useFormik } from 'formik';
 import { object, string,ref, number } from 'yup';
 import { useNavigate } from 'react-router-dom';
+import  loginBg from '../../assets/images/bg-login.jpg'
 
 // define validation/error msg 
 const teacherFormSchema = object({
@@ -101,7 +102,16 @@ const SignUp =()=>{
 
 
     return (
-        <div className=' bg-[#456882] h-screen py-6 flex justify-center items-center'>
+        <div style={{ 
+                                    backgroundImage: `URL(${loginBg})`,  backgroundRepeat: 'no-repeat',
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    height: '100vh',
+                                    width: '100vw',
+                                    display:'flex',
+                                    justifyContent:'center',
+                                    overflow:'hidden'
+                                    }} >
             
             
             <form
